@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">BackingApp</string>
+    <string name="recipe_key">RecipeKey</string>
+    <string name="step_key">StepKey</string>
+    <string name="step_bundle">StepBundle</string>
+    <string name="step_position">StepPosition</string>
+    <string name="ingredient_name">Ingredients</string>
+    <string name="step_name">Steps</string>
+    <string name="measure_name">Measure</string>
+    <string name="quantity_name">Quantity</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="no_prefered_recipe_text">No Prefered Recipe</string>
+    <string name="add_widget">Add widget</string>
+    <string name="tablet_mode">tabletMode</string>
+    <string name="fav_item_title">Fav Recipe</string>
+
+</resources>
