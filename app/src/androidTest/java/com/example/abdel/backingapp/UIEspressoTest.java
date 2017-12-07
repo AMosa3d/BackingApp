@@ -33,7 +33,7 @@ public class UIEspressoTest {
         recyclerView.perform(actionOnItemAtPosition(0, click()));
 
         swipeUntilVisible();
-        
+
         ViewInteraction recyclerView2 = onView(
                 allOf(withId(R.id.steps_recycler), isDisplayed()));
         recyclerView2.perform(actionOnItemAtPosition(0, click()));

@@ -20,6 +20,7 @@ public final class JSONParserUtils {
     public static List<Recipe> getRecipesFromJSON(String JSONString) throws JSONException {
         final String RECIPE_ID = "id";
         final String RECIPE_NAME = "name";
+        final String RECIPE_IMAGE = "image";
         final String RECIPE_INGREDIENTS = "ingredients";
         final String RECIPE_INGREDIENT = "ingredient";
         final String RECIPE_INGREDIENT_MEASURE = "measure";
@@ -73,7 +74,9 @@ public final class JSONParserUtils {
                 stepsListObject.add(new Step(shortDescription,description,videoURL));
             }
 
-            recipeList.add(new Recipe(id,name,ingredientsListObject,stepsListObject));
+            String image = currentRecipe.getString(RECIPE_IMAGE);
+
+            recipeList.add(new Recipe(id,name,ingredientsListObject,stepsListObject,image));
         }
 
         return recipeList;

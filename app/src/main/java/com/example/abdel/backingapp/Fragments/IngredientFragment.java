@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NavUtils;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -117,6 +118,8 @@ public class IngredientFragment extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
+
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.fav_menu,menu);
@@ -148,6 +151,12 @@ public class IngredientFragment extends Fragment {
                 isFav = false;
                 favMenu.getItem(0).setIcon(R.drawable.black_star);
             }
+            return true;
+        }
+        if (id == android.R.id.home)
+        {
+            NavUtils.navigateUpFromSameTask(getActivity());
+            return true;
         }
 
         return false;

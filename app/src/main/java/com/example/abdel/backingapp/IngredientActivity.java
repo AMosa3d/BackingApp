@@ -1,18 +1,14 @@
 package com.example.abdel.backingapp;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 
-import com.example.abdel.backingapp.Adapters.StepsAdapter;
-import com.example.abdel.backingapp.Database.RecipeColumns;
-import com.example.abdel.backingapp.Database.RecipesProvider;
 import com.example.abdel.backingapp.Fragments.IngredientFragment;
 import com.example.abdel.backingapp.Fragments.StepFragment;
 import com.example.abdel.backingapp.Interfaces.StepsManagerInterface;
+import com.example.abdel.backingapp.Interfaces.StepIngredientActivityCommunicator;
 import com.example.abdel.backingapp.Models.Recipe;
 import com.example.abdel.backingapp.Models.Step;
 
@@ -24,6 +20,7 @@ public class IngredientActivity extends AppCompatActivity implements StepsManage
     Recipe currentRecipe;
     IngredientFragment mIngredientFragment;
     StepFragment mStepFragment;
+    public StepIngredientActivityCommunicator stepIngredientActivityCommunicator;
     boolean tabletMode = false;
 
     @Override
@@ -43,12 +40,11 @@ public class IngredientActivity extends AppCompatActivity implements StepsManage
         if (findViewById(R.id.step_container) != null)
         {
             tabletMode = true;
+            mStepFragment = new StepFragment();
+            mStepFragment.setStepsList(currentRecipe.getStepsList());
 
             if (savedInstanceState == null) {
 
-                mStepFragment = new StepFragment();
-                mStepFragment.setCurrentStep(-1);
-                mStepFragment.setStepsList(currentRecipe.getStepsList());
                 getSupportFragmentManager().beginTransaction()
                         .add(R.id.step_container, mStepFragment)
                         .commit();
@@ -77,8 +73,11 @@ public class IngredientActivity extends AppCompatActivity implements StepsManage
         }
         else
         {
-            mStepFragment.setCurrentStep(stepPosition);
-            mStepFragment.setDataToUI();
+            if (stepIngredientActivityCommunicator != null)
+                stepIngredientActivityCommunicator.sendData(stepPosition,stepsList);
+            //mStepFragment.setCurrentStep(stepPosition);
+            //mStepFragment.setStepsList(stepsList);
+           // mStepFragment.setDataToUI();
         }
     }
 }

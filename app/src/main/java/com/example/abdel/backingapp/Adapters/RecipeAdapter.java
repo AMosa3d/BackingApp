@@ -5,11 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.abdel.backingapp.Interfaces.RecipesManagerInterface;
 import com.example.abdel.backingapp.Models.Recipe;
 import com.example.abdel.backingapp.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -43,7 +45,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     @Override
     public void onBindViewHolder(RecipeViewHolder holder, int position) {
-        holder.bind(recipesList.get(position).getName());
+        holder.bind(recipesList.get(position).getName(),recipesList.get(position).getImage());
     }
 
     @Override
@@ -57,9 +59,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     {
 
         TextView recipeNameTextView;
+        ImageView recipeImageView;
         public RecipeViewHolder(View itemView) {
             super(itemView);
             recipeNameTextView = (TextView) itemView.findViewById(R.id.recipe_name);
+            recipeImageView = (ImageView) itemView.findViewById(R.id.recipe_imageView);
             itemView.setOnClickListener(this);
         }
 
@@ -68,8 +72,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             mRecipesManagerInterface.onRecipeClick(recipesList.get(getAdapterPosition()));
         }
 
-        void bind(String name)
+        void bind(String name,String image)
         {
+            if (image.equals("") || image == null)
+            {
+                recipeImageView.setVisibility(View.GONE);
+            }
+            else
+                Picasso.with(context).load(image).resize(300,300).into(recipeImageView);
             recipeNameTextView.setText(name);
         }
     }
