@@ -285,6 +285,12 @@ public class StepFragment extends Fragment implements StepIngredientActivityComm
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        ((IngredientActivity)context).stepIngredientActivityCommunicator = this;
+        try {
+            ((IngredientActivity) context).stepIngredientActivityCommunicator = this;
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 }
