@@ -17,9 +17,10 @@ import java.util.Scanner;
 
 public final class NetworkUtils {
 
+    final static String RECIPE_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
     public static URL buildURL()
     {
-        Uri uri = Uri.parse(BuildConfig.RECIPE_URL).buildUpon().build();
+        Uri uri = Uri.parse(RECIPE_URL).buildUpon().build();
 
         URL url = null;
 
