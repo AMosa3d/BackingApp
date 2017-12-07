@@ -30,6 +30,7 @@ public final class JSONParserUtils {
         final String RECIPE_STEP_SHORT_DESCRIPTION = "shortDescription";
         final String RECIPE_STEP_DESCRIPTION = "description";
         final String RECIPE_STEP_VIDEO_URL = "videoURL";
+        final String RECIPE_STEP_IMAGE_URL = "thumbnailURL";
 
         List<Recipe> recipeList = new ArrayList<>();
 
@@ -70,8 +71,9 @@ public final class JSONParserUtils {
                 String shortDescription = currentStep.getString(RECIPE_STEP_SHORT_DESCRIPTION);
                 String description = currentStep.getString(RECIPE_STEP_DESCRIPTION);
                 String videoURL = currentStep.getString(RECIPE_STEP_VIDEO_URL);
+                String thumbnailURL = currentStep.getString(RECIPE_STEP_IMAGE_URL);
 
-                stepsListObject.add(new Step(shortDescription,description,videoURL));
+                stepsListObject.add(new Step(shortDescription,description,videoURL,thumbnailURL));
             }
 
             String image = currentRecipe.getString(RECIPE_IMAGE);

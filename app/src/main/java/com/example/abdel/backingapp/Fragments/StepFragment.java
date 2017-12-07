@@ -1,6 +1,7 @@
 package com.example.abdel.backingapp.Fragments;
 
 import android.content.Context;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -14,6 +15,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DecodeFormat;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.FileDescriptorBitmapDecoder;
+import com.bumptech.glide.load.resource.bitmap.VideoBitmapDecoder;
 import com.example.abdel.backingapp.IngredientActivity;
 import com.example.abdel.backingapp.Interfaces.StepIngredientActivityCommunicator;
 import com.example.abdel.backingapp.Models.Step;
@@ -36,7 +42,9 @@ import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +55,7 @@ import java.util.List;
 public class StepFragment extends Fragment implements StepIngredientActivityCommunicator {
 
     TextView shortDescriptionTextView,descriptionTextView;
-    ImageView nextImageView,prevImageView;
+    ImageView nextImageView,prevImageView,thumbnailImageView;
     SimpleExoPlayerView stepExoPlayerView;
     SimpleExoPlayer stepExoPlayer;
 
@@ -122,6 +130,7 @@ public class StepFragment extends Fragment implements StepIngredientActivityComm
         nextImageView = (ImageView) view.findViewById(R.id.next_imageView);
         prevImageView = (ImageView) view.findViewById(R.id.prev_imageView);
         stepExoPlayerView = (SimpleExoPlayerView) view.findViewById(R.id.video_exoPlayer);
+        thumbnailImageView = (ImageView) view.findViewById(R.id.thumbnail_imageView);
 
         initializePlayer();
 
@@ -205,7 +214,23 @@ public class StepFragment extends Fragment implements StepIngredientActivityComm
         shortDescriptionTextView.setText(stepsList.get(currentStep).getShortDescription());
         descriptionTextView.setText(stepsList.get(currentStep).getDescription());
 
-        setUriToPlayer();
+        String video = stepsList.get(currentStep).getVideoURL();
+        String image = stepsList.get(currentStep).getThumbnailURL();
+
+        if (video != null && !video.equals("")) {
+            stepExoPlayerView.setVisibility(View.VISIBLE);
+            setUriToPlayer();
+        }
+        else
+            stepExoPlayerView.setVisibility(View.GONE);
+        if (image != null && !image.equals("")) {
+            thumbnailImageView.setVisibility(View.VISIBLE);
+
+            Glide.with(getContext()).load(image).asBitmap().into(thumbnailImageView);
+        }
+        else
+            thumbnailImageView.setVisibility(View.GONE);
+
 
         setImageViews();
     }
@@ -292,5 +317,11 @@ public class StepFragment extends Fragment implements StepIngredientActivityComm
         {
 
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initializePlayer();
     }
 }
